@@ -1,5 +1,5 @@
 #WebKiller
-=========
+
 ##A backdoor scan tool (Written in PHP)
 
 Killing the script based on static matching php-backdoor
