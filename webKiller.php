@@ -1,8 +1,8 @@
 <?php
 /**************webKiller*****************
-[+] Author: 白云下的p4ny
+[+] Author: p4ny
 [+] 版本: v2.0
-[+]License: GPL-2
+[+] License: GPL-2
 请自行判断、审核、对比原文件。           
 */
 define('PASSWORD', '123123');
@@ -69,6 +69,7 @@ echo '</td></tr>
         }
     }
 }
+//特征库
 $shellLib = array(
     '/function\_exists\s*\(\s*[\'|\"](popen|exec|proc\_open|system|passthru)+[\'|\"]\s*\)/i',
     '/(exec|shell\_exec|system|passthru)+\s*\(\s*\$\_(\w+)\[(.*)\]\s*\)/i',
@@ -78,7 +79,34 @@ $shellLib = array(
     '/(eval|assert|include|require|include\_once|require\_once)+\s*\(\s*(base64\_decode|str\_rot13|gz(\w+)|file\_(\w+)\_contents|(.*)php\:\/\/input)+/i',
     '/(eval|assert|include|require|include\_once|require\_once|array\_map|array\_walk)+\s*\(\s*\$\_(GET|POST|REQUEST|COOKIE|SERVER|SESSION)+\[(.*)\]\s*\)/i',
     '/eval\s*\(\s*\(\s*\$\$(\w+)/i',
-    //特征库.
+    '/chr(99).chr(104).chr(114)/i',
+    '/(include|require|include\_once|require\_once)+\s*\(\s*[\'|\"](\w+)\.(jpg|gif|ico|bmp|png|txt|zip|rar|htm|css|js)+[\'|\"]\s*\)/i',
+    '/\$\_(\w+)(.*)(eval|assert|include|require|include\_once|require\_once)+\s*\(\s*\$(\w+)\s*\)/i',
+    '/\(\s*\$\_FILES\[(.*)\]\[(.*)\]\s*\,\s*\$\_(GET|POST|REQUEST|FILES)+\[(.*)\]\[(.*)\]\s*\)/i',
+    '/(fopen|fwrite|fputs|file\_put\_contents)+\s*\((.*)\$\_(GET|POST|REQUEST|COOKIE|SERVER)+\[(.*)\](.*)\)/i',
+    '/echo\s*curl\_exec\s*\(\s*\$(\w+)\s*\)/i',
+    '/new com\s*\(\s*[\'|\"]shell(.*)[\'|\"]\s*\)/i',
+    '/(eval|assert).([\s\S]*).ob_start(\s|\/\*.*?\*\/)*\(\s*.*?\s*\)/i',
+    '/\$(.*)\s*\((.*)\/e(.*)\,\s*\$\_(.*)\,(.*)\)/i',
+    '/\$\_\=(.*)\$\_/i',
+    '/\$\_(GET|POST|REQUEST|COOKIE|SERVER)+\[(.*)\]\(\s*\$(.*)\)/i',
+    '/\$(\w+)\s*\(\s*\$\_(GET|POST|REQUEST|COOKIE|SERVER)+\[(.*)\]\s*\)/i',
+    '/\$(\w+)\s*\(\s*\$\{(.*)\}/i',
+    '/\$(\w+)\s*\(\s*chr\(\d+\)/i',
+	'/(phpspy|4ngel|wofeiwo|c99shell|webshell|php_nst|reDuh|tools88\.com|silic)/i',
+	'/\$[\w-_\'\\[\\]{}\.\$\*/|]+(\s|\/\*.*?\*\/)*\(.*?\)',
+	'/create_function/i',
+	'/chr\\([^\\)]+\\).+chr\\([^\\)]+\\)/i',
+	'/array_map\(\"a/i',
+    '/\\$\_\=\"\"\;/i',
+	'/array_map(\s|\/\*.*?\*\/)*\(\s*.*?\s*\)/i',
+	'/array_map\(\'a/i',
+	'/(php_valueauto_prepend_file|php_valueauto_append_file)/i', //.htaccess插马特征
+	'/SetHandlerapplication\/x-httpd-php/i', //.htaccess插马特征
+    '/.*?(b).*?(a).*?(s).*?(e).*?(6).*?(4).*?(_).*?(d).*?(e).*?(c).*?(d).*?(e)[\w\s]*(\"|\')/i',//weevely加密特征
+	'/ReflectionFunction\((\$_(GET|POST)|\"SYSTEM)/i',
+    '/\\$[a-z]+=\\$[a-z]+\(\'\',\\$[a-z]+\(\\$[a-z]+\("[a-z]+","",\\$[a-z]+\.\\$[a-z]+\.\\$[a-z]+\.\\$[a-z]+\)\)\);/i',
+	'/assert.*(\$_POST|\$_REQUEST|\$_GET)/i'
 );
 function shellScan($fileexs,$dir,$shellLib){
 	if(($handle = @opendir($dir)) == false) 
