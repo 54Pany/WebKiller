@@ -1,15 +1,7 @@
 #WebKiller
 
-##A backdoor scan tool (Written in PHP)
+##一个php后门查杀脚本(Written in PHP)
 
-Killing the script based on static matching php-backdoor
+查杀php backdoor对于使用虚拟主机的站长门来说是一个难题，因为没有服务器管理权限，无法使用安全狗、云锁之类的查杀工具，因此基于php的查杀脚本在这个情况下实际用途的。
 
-Preface:
-
-Killing php-backdoor for webmasters to use virtual hostsdoor, it has been a difficult, predecessors wrote before killing some php script, for example: Cmstop of scanner.php, Spider wrote Spider.php. These scripts use the regular match, obviously, today we have enough of killing webshell.
-
-Why do not you applied?
-
-Rules are written entirely inadequate。
-
-WebKiller added a lot of new features backdoor。
+本脚本参考了Cmstop的scanner.php，Spider写的Spider.php，加上了笔者自己收集的一些backdoor特征。
